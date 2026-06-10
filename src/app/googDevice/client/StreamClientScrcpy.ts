@@ -2,6 +2,7 @@ import { BaseClient } from '../../client/BaseClient';
 import { ParamsStreamScrcpy } from '../../../types/ParamsStreamScrcpy';
 import { GoogMoreBox } from '../toolbox/GoogMoreBox';
 import { GoogToolBox } from '../toolbox/GoogToolBox';
+import { RecordToolbar } from '../RecordToolbar';
 import VideoSettings from '../../VideoSettings';
 import Size from '../../Size';
 import { ControlMessage } from '../../controlMessage/ControlMessage';
@@ -317,6 +318,11 @@ export class StreamClientScrcpy
         googMoreBox.setOnStop(stop);
         const googToolBox = GoogToolBox.createToolBox(udid, player, this, moreBox);
         this.controlButtons = googToolBox.getHolderElement();
+        const recordToolbar = RecordToolbar.create(udid);
+        const recordHolder = recordToolbar.getHolderElement();
+        while (recordHolder.firstChild) {
+            this.controlButtons.appendChild(recordHolder.firstChild);
+        }
         deviceView.appendChild(this.controlButtons);
         const video = document.createElement('div');
         video.className = 'video';
